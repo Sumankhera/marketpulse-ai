@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# Raw daily data changes every run — not tracked, regenerate with day01 script
+data/*.csv
+
+# Chart images ARE tracked (outputs/charts/) — they're the visible portfolio evidence

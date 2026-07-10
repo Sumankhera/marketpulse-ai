@@ -11,6 +11,7 @@ it with an LLM.
 import os
 from datetime import datetime
 
+import pandas as pd
 import yfinance as yf
 
 # Watchlist: a mix of individual stocks and a broad market ETF.
@@ -28,6 +29,12 @@ def fetch_and_save(ticker: str, period: str = PERIOD) -> str:
 
     if df.empty:
         raise ValueError(f"No data returned for {ticker} — check the ticker symbol or your connection.")
+
+    # Newer yfinance versions return MultiIndex columns (e.g. ("Close", "AAPL"))
+    # even for a single ticker. Flatten to plain column names so the CSV has
+    # one clean header row instead of two, which would break reading it back.
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
 
     os.makedirs(DATA_DIR, exist_ok=True)
     filepath = os.path.join(DATA_DIR, f"{ticker}.csv")
