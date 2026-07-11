@@ -49,4 +49,4 @@ python src/day01_data_ingestion.py
 
 ## Status
 
-Day 2 complete — see `progress_log.md`.
+Day 3 complete — see `progress_log.md`.

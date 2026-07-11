@@ -5,4 +5,7 @@ __pycache__/
 # Raw daily data changes every run — not tracked, regenerate with day01 script
 data/*.csv
 
+# Engineered feature files also regenerate every run — not tracked, regenerate with day03 script
+data/features/*.csv
+
 # Chart images ARE tracked (outputs/charts/) — they're the visible portfolio evidence
