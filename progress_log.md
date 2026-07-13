@@ -20,3 +20,10 @@ Built the feature engineering script: reads Day 1's CSVs and adds the "clues" a 
 Verified: ran end-to-end on the real data already pulled in Day 1 (not mock data this time). Caught and fixed a real bug along the way — the very last row of each ticker has no "next day" yet, so its target was silently coming out as a fake "down" instead of blank; fixed by leaving it blank (`NaN`) when there's no next-day price to compare against. Added `data/features/*.csv` to `.gitignore` since it regenerates from `data/*.csv`, same treatment as the raw data.
 
 Next: baseline ML model — predict next-day direction (up/down) using these features (Day 4).
+
+## Day 4 — 2026-07-13
+Built the baseline model: a logistic regression trained per ticker on Day 3's clues (RSI, Bollinger Bands, lagged returns) to predict next-day up/down. Split each ticker's history chronologically (80/20) rather than randomly, since shuffling would let the model "see the future." Compared against a dumb baseline (always guess the more common direction).
+
+Verified: ran end-to-end on the real feature data. Results are mixed and reported honestly — MSFT beat the baseline (66.7% vs 52.4%), but AAPL, GOOGL, and SPY did not. That's expected for a first-pass model on ~100 rows per ticker; the point of Day 4 was a working, honest baseline to improve on, not a winning model yet.
+
+Next: model evaluation + a simple backtest (Day 5).
