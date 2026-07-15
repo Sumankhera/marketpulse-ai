@@ -27,3 +27,17 @@ Built the baseline model: a logistic regression trained per ticker on Day 3's cl
 Verified: ran end-to-end on the real feature data. Results are mixed and reported honestly — MSFT beat the baseline (66.7% vs 52.4%), but AAPL, GOOGL, and SPY did not. That's expected for a first-pass model on ~100 rows per ticker; the point of Day 4 was a working, honest baseline to improve on, not a winning model yet.
 
 Next: model evaluation + a simple backtest (Day 5).
+
+## Day 5 — 2026-07-14
+Built the evaluation + backtest script: reports precision/recall (not just accuracy, which hides a model that only calls "up") on the same chronological test split as Day 4, then runs a simple backtest — hold the stock on days the model predicts "up", sit in cash otherwise — and compares the compounded result to plain buy-and-hold.
+
+Verified: ran end-to-end on the real feature data. MSFT showed real signal (75% precision, beat buy-and-hold by ~9.7 points); AAPL and GOOGL never predicted "up" at all on this test window (0% precision/recall), so they just sat in cash; SPY had 100% recall but only 48% precision and tied buy-and-hold. Reported honestly rather than cherry-picked.
+
+Next: LLM layer — turn model output + data into a plain-English daily summary (Day 6).
+
+## Day 6 — 2026-07-14
+Built the LLM layer: retrains the Day 4/5 model per ticker, predicts tomorrow's direction from the latest (unlabeled) row, and hands Claude (`claude-opus-4-8`) a compact per-ticker data summary — price, RSI, predicted direction, precision/recall, and backtest vs. buy-and-hold — with instructions to write one honest plain-English paragraph per ticker and flag weak signals instead of hedging.
+
+Verified: the data-prep half (retraining, next-day prediction, prompt construction) ran end-to-end on the real feature data and produced a correct per-ticker prompt. The actual Claude API call is unverified in this sandbox — no `ANTHROPIC_API_KEY` is set here; the user will run it with their own key.
+
+Next: automate the pipeline end-to-end, writing a daily report file (Day 7).
