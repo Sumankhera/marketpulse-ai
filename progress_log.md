@@ -41,3 +41,10 @@ Built the LLM layer: retrains the Day 4/5 model per ticker, predicts tomorrow's 
 Verified: the data-prep half (retraining, next-day prediction, prompt construction) ran end-to-end on the real feature data and produced a correct per-ticker prompt. The actual Claude API call is unverified in this sandbox — no `ANTHROPIC_API_KEY` is set here; the user will run it with their own key.
 
 Next: automate the pipeline end-to-end, writing a daily report file (Day 7).
+
+## Day 7 — 2026-07-15
+Wired Days 1, 3, 4/5, and 6 together into one script (`day07_pipeline.py`): pulls fresh OHLCV data, rebuilds the feature CSVs, retrains each ticker's model, asks Claude for the summary, and writes everything to a dated report file (`outputs/reports/YYYY-MM-DD.md`) instead of just printing to the terminal.
+
+Verified: ran the ingestion and feature-rebuild steps end-to-end with live Yahoo Finance data (network was reachable from this sandbox today, unlike Day 1). Ran the model-retraining, prediction, and report-writing steps end-to-end too, standing in a placeholder for the one piece this sandbox can't do — the live Claude API call, since no `ANTHROPIC_API_KEY` is set here — and confirmed the generated report file has the right shape (summary + per-ticker table). Deleted that placeholder report afterward so the committed repo doesn't carry a fake summary; the user will run `python src/day07_pipeline.py` with their own key to produce the first real one.
+
+Next: news sentiment (RAG over headlines) and a simple dashboard (Day 8).
