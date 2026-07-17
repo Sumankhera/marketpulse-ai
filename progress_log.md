@@ -48,3 +48,10 @@ Wired Days 1, 3, 4/5, and 6 together into one script (`day07_pipeline.py`): pull
 Verified: ran the ingestion and feature-rebuild steps end-to-end with live Yahoo Finance data (network was reachable from this sandbox today, unlike Day 1). Ran the model-retraining, prediction, and report-writing steps end-to-end too, standing in a placeholder for the one piece this sandbox can't do — the live Claude API call, since no `ANTHROPIC_API_KEY` is set here — and confirmed the generated report file has the right shape (summary + per-ticker table). Deleted that placeholder report afterward so the committed repo doesn't carry a fake summary; the user will run `python src/day07_pipeline.py` with their own key to produce the first real one.
 
 Next: news sentiment (RAG over headlines) and a simple dashboard (Day 8).
+
+## Day 8 — 2026-07-17
+Built the news sentiment script: pulls each ticker's most recent headlines via `yfinance`'s news feed, then asks Claude to call the near-term tone bullish/neutral/bearish *grounded only in those retrieved headlines* — not its own training knowledge — quoting the specific headline behind the call. That retrieve-then-generate step is the RAG piece the roadmap called for. Kept it a standalone script for now, same as Day 6 was before Day 7 wired it in. Saves headlines + the sentiment call to `data/news/{ticker}_news.json` (gitignored, regenerates daily like the other data/feature files).
+
+Verified: headline retrieval, prompt construction, and response parsing all ran end-to-end on real data (live headlines for AAPL/MSFT/GOOGL/SPY came back correctly). The actual Claude sentiment call is unverified in this sandbox — no `ANTHROPIC_API_KEY` is set here, same limitation as Day 6/7; the user will run it with their own key.
+
+Next: fold Day 8 into the Day 7 pipeline so the daily report includes news sentiment alongside the price-model summary, then a simple dashboard (Day 9+).

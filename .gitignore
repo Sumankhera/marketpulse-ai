@@ -8,4 +8,7 @@ data/*.csv
 # Engineered feature files also regenerate every run — not tracked, regenerate with day03 script
 data/features/*.csv
 
+# News headlines + sentiment calls also regenerate every run — not tracked, regenerate with day08 script
+data/news/*.json
+
 # Chart images ARE tracked (outputs/charts/) — they're the visible portfolio evidence

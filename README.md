@@ -19,7 +19,8 @@ A daily-built project that turns raw market data into plain-English insights usi
 | 5 | Model evaluation + simple backtest |
 | 6 | LLM layer: turn model output + data into a plain-English daily summary |
 | 7 | Automate: script runs end-to-end, writes a daily "report" file |
-| 8+ | Add news sentiment (RAG over headlines), improve model, build a simple dashboard |
+| 8 | News sentiment: retrieve real headlines, ask Claude to call bullish/neutral/bearish grounded in them (RAG) |
+| 9+ | Fold Day 8 into the pipeline, improve the model, build a simple dashboard |
 
 Each day's work lives in `src/dayNN_*.py`. Progress is logged in `progress_log.md`.
 
@@ -49,4 +50,4 @@ python src/day01_data_ingestion.py
 
 ## Status
 
-Day 7 complete — see `progress_log.md`.
+Day 8 complete — see `progress_log.md`.
