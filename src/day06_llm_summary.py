@@ -90,15 +90,17 @@ def build_prompt(reports: dict[str, dict]) -> str:
         "Here is model output for a small stock watchlist. For each ticker, "
         "write one short plain-English paragraph (3-4 sentences) covering: "
         "what the model predicts for the next trading day, how much to trust "
-        "that prediction given its precision/recall on held-out data, and how "
-        "the trading strategy has done versus simple buy-and-hold. Be honest: "
+        "that prediction given its precision/recall on held-out data, how "
+        "the trading strategy has done versus simple buy-and-hold, and (when "
+        "given) whether the current news sentiment agrees or conflicts with "
+        "the model's prediction. Be honest: "
         "if precision or recall is weak (e.g. under ~55%) or the strategy "
         "didn't beat buy-and-hold, say so plainly instead of hedging around it. "
         "Do not give financial advice or tell the reader to buy/sell — describe "
         "what the model says and how reliable it has been.\n",
     ]
     for ticker, r in reports.items():
-        lines.append(
+        line = (
             f"{ticker} (as of {r['as_of']}): close ${r['latest_close']}, "
             f"RSI14 {r['latest_rsi14']}, model predicts '{r['predicted_direction']}' "
             f"for the next trading day. On {r['test_days']} held-out test days: "
@@ -106,6 +108,9 @@ def build_prompt(reports: dict[str, dict]) -> str:
             f"Backtest strategy return {r['strategy_return']:+.1%} vs. "
             f"buy-and-hold {r['buy_and_hold_return']:+.1%}."
         )
+        if r.get("news_label"):
+            line += f" News sentiment: {r['news_label']} ({r['news_rationale']})"
+        lines.append(line)
     return "\n".join(lines)
 
 

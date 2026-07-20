@@ -55,3 +55,10 @@ Built the news sentiment script: pulls each ticker's most recent headlines via `
 Verified: headline retrieval, prompt construction, and response parsing all ran end-to-end on real data (live headlines for AAPL/MSFT/GOOGL/SPY came back correctly). The actual Claude sentiment call is unverified in this sandbox — no `ANTHROPIC_API_KEY` is set here, same limitation as Day 6/7; the user will run it with their own key.
 
 Next: fold Day 8 into the Day 7 pipeline so the daily report includes news sentiment alongside the price-model summary, then a simple dashboard (Day 9+).
+
+## Day 8b — Folded into the Day 7 pipeline — 2026-07-20
+`day07_pipeline.py` now fetches each ticker's headlines and sentiment call (Day 8) inside the same step that retrains the model, and merges `news_label`/`news_rationale` into that ticker's report dict. `day06_llm_summary.py`'s prompt builder now mentions the news sentiment alongside the price-model numbers and asks Claude to note whether they agree or conflict; the written report's table gained a News column. Day 8's standalone script and its `save_ticker_news` helper are unchanged and still reused by the pipeline (so `data/news/{ticker}_news.json` keeps getting written).
+
+Verified: ran ingestion, feature-rebuild, model retraining, and live headline fetching end-to-end (network was reachable) — real headlines came back for all four tickers. Stubbed only the two Claude API calls (sentiment + summary), since no `ANTHROPIC_API_KEY` is set in this sandbox, and confirmed the merged report dict carries `news_label`/`news_rationale` per ticker and the written report file has the new News column with the right shape. Deleted the stubbed report and news JSON files afterward so the repo doesn't carry fake sentiment; the user will run `python src/day07_pipeline.py` with their own key to produce the first real combined report.
+
+Next: a simple dashboard (Day 9).
