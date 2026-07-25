@@ -11,4 +11,7 @@ data/features/*.csv
 # News headlines + sentiment calls also regenerate every run — not tracked, regenerate with day08 script
 data/news/*.json
 
+# Daily reports also regenerate every run — not tracked, regenerate with day07 script
+outputs/reports/*.md
+
 # Chart images ARE tracked (outputs/charts/) — they're the visible portfolio evidence
