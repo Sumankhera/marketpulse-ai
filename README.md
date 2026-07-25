@@ -20,7 +20,7 @@ A daily-built project that turns raw market data into plain-English insights usi
 | 6 | LLM layer: turn model output + data into a plain-English daily summary |
 | 7 | Automate: script runs end-to-end, writes a daily "report" file |
 | 8 | News sentiment: retrieve real headlines, ask Claude to call bullish/neutral/bearish grounded in them (RAG) |
-| 9+ | Fold Day 8 into the pipeline, improve the model, build a simple dashboard |
+| 9 | Streamlit dashboard: one page to browse price charts, indicators, news sentiment, and the latest daily report per ticker |
 
 Each day's work lives in `src/dayNN_*.py`. Progress is logged in `progress_log.md`.
 
@@ -48,6 +48,12 @@ pip install -r requirements.txt
 python src/day01_data_ingestion.py
 ```
 
+To view the dashboard:
+
+```bash
+streamlit run src/day09_dashboard.py
+```
+
 ## Status
 
-Day 8 complete — see `progress_log.md`.
+Day 9 complete — see `progress_log.md`.
