@@ -62,3 +62,10 @@ Next: fold Day 8 into the Day 7 pipeline so the daily report includes news senti
 Verified: ran ingestion, feature-rebuild, model retraining, and live headline fetching end-to-end (network was reachable) — real headlines came back for all four tickers. Stubbed only the two Claude API calls (sentiment + summary), since no `ANTHROPIC_API_KEY` is set in this sandbox, and confirmed the merged report dict carries `news_label`/`news_rationale` per ticker and the written report file has the new News column with the right shape. Deleted the stubbed report and news JSON files afterward so the repo doesn't carry fake sentiment; the user will run `python src/day07_pipeline.py` with their own key to produce the first real combined report.
 
 Next: a simple dashboard (Day 9).
+
+## Day 9 — 2026-07-24
+Built the dashboard: `day09_dashboard.py` (Streamlit) reads whatever's already on disk — price CSVs, feature CSVs, news sentiment JSON, and the latest daily report — and lays it out as one page per watchlist ticker (price chart + 20-day MA, latest close, RSI14, news sentiment with headlines, plus the most recent report at the top). It's a viewer only; it doesn't refetch or retrain, just wraps Days 1–8's outputs in something browsable instead of digging through files by hand. Added `streamlit` to `requirements.txt`.
+
+Verified: ran `streamlit run src/day09_dashboard.py` end-to-end against real data already on disk from earlier days (price/feature CSVs, news JSON, one report) — all four ticker tabs render correctly, including the "no data yet" fallback messages for any file that's missing.
+
+Next: TBD.
